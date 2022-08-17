@@ -44,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 			"/resendverifytoken*",
 			"/resetpassword",
 			"/savePassword"	,
+			"/getproductbyid/*",
+			"/getcategorybyid/*",
 			"/",
 			"/products/all",
 			"/categories/all",
