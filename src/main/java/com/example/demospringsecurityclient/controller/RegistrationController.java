@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demospringsecurityclient.entity.Email;
 import com.example.demospringsecurityclient.entity.User;
 import com.example.demospringsecurityclient.entity.VerificationToken;
+import com.example.demospringsecurityclient.error.EmailAlreadyExistsException;
 import com.example.demospringsecurityclient.event.RegistrationCompleteEvent;
 import com.example.demospringsecurityclient.model.PasswordModel;
 import com.example.demospringsecurityclient.model.UserModel;
@@ -45,7 +46,7 @@ public class RegistrationController {
 	Email emailSenderService;
 	
 	@PostMapping("/register")
-	public void registerUser(@RequestBody UserModel usermodel ,final HttpServletRequest request) {
+	public void registerUser(@RequestBody UserModel usermodel ,final HttpServletRequest request) throws EmailAlreadyExistsException {
 		User user=userservice.registerUser(usermodel);
 		publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(request)));
 

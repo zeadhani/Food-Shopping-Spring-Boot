@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.example.demospringsecurityclient.entity.Category;
 import com.example.demospringsecurityclient.entity.Product;
+import com.example.demospringsecurityclient.error.EmailAlreadyExistsException;
+import com.example.demospringsecurityclient.error.ProductAlreadyExistsException;
 import com.example.demospringsecurityclient.error.ProductNotFoundException;
 import com.example.demospringsecurityclient.model.ProductAdd;
 
@@ -11,7 +13,7 @@ public interface ProductService {
 
 	List<Product> getAllProducts();
 
-	ProductAdd createNewProduct(ProductAdd newproduct);
+	ProductAdd createNewProduct(ProductAdd newproduct) throws ProductAlreadyExistsException;
 
 	boolean deleteProductById(Long id);
 

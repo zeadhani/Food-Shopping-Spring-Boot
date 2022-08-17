@@ -3,7 +3,9 @@ package com.example.demospringsecurityclient.controller;
 
 import java.util.List;
 
+import com.example.demospringsecurityclient.error.CategoryAlreadyExistsException;
 import com.example.demospringsecurityclient.error.CategoryNotFoundException;
+import com.example.demospringsecurityclient.error.ProductAlreadyExistsException;
 import com.example.demospringsecurityclient.error.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -51,12 +53,12 @@ public class ProductController {
 	
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value = "/add/product")
-	public ProductAdd createNewProduct(@RequestBody ProductAdd newproduct) {
+	public ProductAdd createNewProduct(@RequestBody ProductAdd newproduct) throws ProductAlreadyExistsException {
 		return productService.createNewProduct(newproduct);
 	}
 	//@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value = "/add/category")
-	public CategoryAdd createNewCategory(@RequestBody CategoryAdd newcategory) {
+	public CategoryAdd createNewCategory(@RequestBody CategoryAdd newcategory) throws CategoryAlreadyExistsException {
 		return categoryService.createNewCategory(newcategory);
 	}
 	

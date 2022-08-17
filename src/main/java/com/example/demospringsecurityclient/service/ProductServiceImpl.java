@@ -3,6 +3,8 @@ package com.example.demospringsecurityclient.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demospringsecurityclient.error.EmailAlreadyExistsException;
+import com.example.demospringsecurityclient.error.ProductAlreadyExistsException;
 import com.example.demospringsecurityclient.error.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,18 +29,25 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public ProductAdd createNewProduct(ProductAdd newproduct) {
+	public ProductAdd createNewProduct(ProductAdd newproduct) throws ProductAlreadyExistsException  {
 		if (newproduct != null) {
 			Product product=new Product();
-			product.setName(newproduct.getName());
-			product.setDescription(newproduct.getDescription());
-			product.setPrice(newproduct.getPrice());
-			product.setImageurl(newproduct.getImageurl());
-			product.setCategory(categoryRepository.findById(newproduct.getCategory_id()).get());
-			productRepository.save(product);
-		return newproduct;
+			if(productRepository.existsByName(newproduct.getName())!=null) {
+				
+				throw new ProductAlreadyExistsException("product already exists");	
+				
+			}else {
+	            product.setName(newproduct.getName());
+				product.setDescription(newproduct.getDescription());
+				product.setPrice(newproduct.getPrice());
+				product.setImageurl(newproduct.getImageurl());
+				product.setCategory(categoryRepository.findById(newproduct.getCategory_id()).get());
+				productRepository.save(product);
+				 return newproduct;
+
+			   }
 		}
-		return null;
+		 return null;
 	}
 
 	@Override

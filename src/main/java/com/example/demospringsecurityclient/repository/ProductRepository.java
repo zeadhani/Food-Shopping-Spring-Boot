@@ -9,4 +9,6 @@ import com.example.demospringsecurityclient.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository <Product, Long>{
 
+	Object existsByName(String name);
+
 }

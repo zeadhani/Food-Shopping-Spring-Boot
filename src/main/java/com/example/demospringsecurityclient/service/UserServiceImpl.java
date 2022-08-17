@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.example.demospringsecurityclient.entity.PasswordResetToken;
 import com.example.demospringsecurityclient.entity.User;
 import com.example.demospringsecurityclient.entity.VerificationToken;
+import com.example.demospringsecurityclient.error.EmailAlreadyExistsException;
+import com.example.demospringsecurityclient.error.ProductNotFoundException;
 import com.example.demospringsecurityclient.model.UserModel;
 import com.example.demospringsecurityclient.repository.ResetPasswordTokenRepository;
 import com.example.demospringsecurityclient.repository.UserRepository;
@@ -33,16 +35,25 @@ public class UserServiceImpl implements UserService {
 	private ResetPasswordTokenRepository resetPasswordTokenRepository;
 	
 	@Override
-	public User registerUser(UserModel usermodel) {
+	public User registerUser(UserModel usermodel) throws EmailAlreadyExistsException {
 		
-		User user=new User();
-		user.setEmail(usermodel.getEmail());
-		user.setFirstname(usermodel.getFirstname());
-		user.setLastname(usermodel.getLastname());
-		user.setRole("USER");
-		user.setPassword(passwordEncoder.encode(usermodel.getPassword()));
-		userReposityory.save(user);
-		return user;
+		
+		if(userReposityory.existsByEmail(usermodel.getEmail())!=null) {
+			
+			throw new EmailAlreadyExistsException("email already exists");
+			
+		}else {
+			User user=new User();
+			user.setEmail(usermodel.getEmail());
+			user.setFirstname(usermodel.getFirstname());
+			user.setLastname(usermodel.getLastname());
+			user.setRole("USER");
+			user.setPassword(passwordEncoder.encode(usermodel.getPassword()));
+			userReposityory.save(user);
+			return user;
+			
+		}
+
 	}
 
 	@Override

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demospringsecurityclient.error.CategoryAlreadyExistsException;
 import com.example.demospringsecurityclient.error.CategoryNotFoundException;
+import com.example.demospringsecurityclient.error.ProductAlreadyExistsException;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,12 +47,19 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryAdd createNewCategory(CategoryAdd newcategory) {
+	public CategoryAdd createNewCategory(CategoryAdd newcategory) throws CategoryAlreadyExistsException {
 		if (newcategory != null) {
 			Category category =new Category();
-			BeanUtils.copyProperties(newcategory, category);
-			 categoryRepository.save(category);
-			 return newcategory;
+          if(categoryRepository.existsByName(newcategory.getName())!=null) {
+				
+				throw new CategoryAlreadyExistsException("category already exists");	
+				
+			}else {
+				
+				BeanUtils.copyProperties(newcategory, category);
+				 categoryRepository.save(category);
+				 return newcategory;
+			}
 		}
 		return null;
 	}
@@ -61,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 			throw new CategoryNotFoundException("Category not found");
 		}
 		CategoryModel categoryModel = new CategoryModel();
-	     BeanUtils.copyProperties(category, categoryModel);
+	     BeanUtils.copyProperties(category.get(), categoryModel);
 	
 		return categoryModel;
 	}

@@ -6,12 +6,13 @@ import java.util.Optional;
 
 import com.example.demospringsecurityclient.entity.User;
 import com.example.demospringsecurityclient.entity.VerificationToken;
+import com.example.demospringsecurityclient.error.EmailAlreadyExistsException;
 import com.example.demospringsecurityclient.model.UserModel;
 
 
 public interface UserService {
 
-	User registerUser(UserModel usermodel);
+	User registerUser(UserModel usermodel) throws EmailAlreadyExistsException;
 
 	void saveVerificationTokenForUser(String token, User user);
 
