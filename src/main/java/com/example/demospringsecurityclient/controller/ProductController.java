@@ -19,7 +19,7 @@ import com.example.demospringsecurityclient.service.CategoryService;
 import com.example.demospringsecurityclient.service.ProductService;
 
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class ProductController {
 

@@ -18,20 +18,20 @@ import com.example.demospringsecurityclient.service.UserService;
 
 import javax.transaction.Transactional;
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping(value = "/users/all")
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@DeleteMapping(value = "/del/{userId}")
 	public boolean deleteUser(@PathVariable(value = "userId") Long id) {
 		return userService.deleteEmployeeById(id);
