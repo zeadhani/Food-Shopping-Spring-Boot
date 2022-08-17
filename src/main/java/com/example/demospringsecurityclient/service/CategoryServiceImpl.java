@@ -48,15 +48,12 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public CategoryAdd createNewCategory(CategoryAdd newcategory) throws CategoryAlreadyExistsException {
+		Category category =new Category();
 		if (newcategory != null) {
-			Category category =new Category();
-          if(categoryRepository.existsByName(newcategory.getName())!=null) {
-				
-				throw new CategoryAlreadyExistsException("category already exists");	
-				
+          if(categoryRepository.existsByName(newcategory.getName())) {		
+				throw new CategoryAlreadyExistsException("category already exists");			
 			}else {
-				
-				BeanUtils.copyProperties(newcategory, category);
+            	BeanUtils.copyProperties(newcategory, category);
 				 categoryRepository.save(category);
 				 return newcategory;
 			}

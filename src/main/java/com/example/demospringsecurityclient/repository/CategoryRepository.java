@@ -9,6 +9,6 @@ import com.example.demospringsecurityclient.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository <Category, Long>{
 
-	Object existsByName(String name);
+	boolean existsByName(String name);
 
 }

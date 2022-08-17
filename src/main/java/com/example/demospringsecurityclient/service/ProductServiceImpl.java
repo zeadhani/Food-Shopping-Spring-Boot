@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService{
 	public ProductAdd createNewProduct(ProductAdd newproduct) throws ProductAlreadyExistsException  {
 		if (newproduct != null) {
 			Product product=new Product();
-			if(productRepository.existsByName(newproduct.getName())!=null) {
+			if(productRepository.existsByName(newproduct.getName())) {
 				
 				throw new ProductAlreadyExistsException("product already exists");	
 				

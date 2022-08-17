@@ -37,13 +37,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerUser(UserModel usermodel) throws EmailAlreadyExistsException {
 		
+		User user=new User();
 		
-		if(userReposityory.existsByEmail(usermodel.getEmail())!=null) {
+		if(userReposityory.existsByEmail(usermodel.getEmail())) {
 			
 			throw new EmailAlreadyExistsException("email already exists");
 			
 		}else {
-			User user=new User();
+			
 			user.setEmail(usermodel.getEmail());
 			user.setFirstname(usermodel.getFirstname());
 			user.setLastname(usermodel.getLastname());
