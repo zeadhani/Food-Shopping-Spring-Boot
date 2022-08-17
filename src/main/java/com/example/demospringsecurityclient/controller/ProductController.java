@@ -49,18 +49,18 @@ public class ProductController {
 		return categoryService.getCategoryById(categoryId);
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value = "/add/product")
 	public ProductAdd createNewProduct(@RequestBody ProductAdd newproduct) {
 		return productService.createNewProduct(newproduct);
 	}
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@PostMapping(value = "/add/category")
 	public CategoryAdd createNewCategory(@RequestBody CategoryAdd newcategory) {
 		return categoryService.createNewCategory(newcategory);
 	}
 	
-	@PreAuthorize("hasAuthority('ADMIN')")
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	@DeleteMapping(value = "/deleteproduct/{productId}")
 	public boolean deleteProductById(@PathVariable(value = "productId") Long id) {
 		return productService.deleteProductById(id);
