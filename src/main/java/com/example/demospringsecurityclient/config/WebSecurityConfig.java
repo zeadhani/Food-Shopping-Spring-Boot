@@ -70,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.anyRequest().authenticated().and()
 		.addFilter(new JWTAuthenticationFilter(authenticationManager()))
         .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors()
 		.and().csrf().disable();  
 	}
 	//.and().logout().logoutRequestMatcher( new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
