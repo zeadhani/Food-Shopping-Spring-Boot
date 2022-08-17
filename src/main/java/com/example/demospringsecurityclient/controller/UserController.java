@@ -5,8 +5,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import com.example.demospringsecurityclient.model.CustomUserDetails;
 import com.example.demospringsecurityclient.model.UserProfile;
 import com.example.demospringsecurityclient.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,13 +40,13 @@ public class UserController {
 		return userService.deleteEmployeeById(id);
 	}
 	
-	@GetMapping(value = "/getuserdetails")
-	public UserProfile getuserdetails(){
-		UserProfile userprofile=new UserProfile();
-		User user= ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-		BeanUtils.copyProperties(user, userprofile);
-		return userprofile;
-   }
+
 	
+	@GetMapping(value = "/getuserdetails")
+	 public User currentUserName(HttpServletRequest request) {
+		String username=request.getUserPrincipal().getName();
+		User user=userService.getUserByEmail(username);
+		 return user;
+	    }
 	
 }

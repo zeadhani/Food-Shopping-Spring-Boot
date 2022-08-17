@@ -176,5 +176,12 @@ public class UserServiceImpl implements UserService {
 	
 
   }
+
+	@Override
+	public User getUserByEmail(String username) {
+		User user=userReposityory.findByEmail(username);
+		return user;
+	}
+
 }
 

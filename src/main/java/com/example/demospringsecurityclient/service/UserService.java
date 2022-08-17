@@ -36,6 +36,10 @@ public interface UserService {
 
 	boolean deleteEmployeeById(Long id);
 
+	User getUserByEmail(String username);
+
+
+
 
 
 
